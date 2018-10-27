@@ -5,9 +5,9 @@
 using namespace std;
 ////////////////////////////
 /*
-	º¯Êı¸ß½×
-	1.º¯ÊıÖ¸Õë
-	2.º¯Êı°ó¶¨ //Àà±Èjs function curring 
+	å‡½æ•°é«˜é˜¶
+	1.å‡½æ•°æŒ‡é’ˆ
+	2.å‡½æ•°ç»‘å®š //ç±»æ¯”js function curring 
 */
 /////////////////////////// 
 void add(int a,int b){
@@ -48,7 +48,7 @@ class Fn{
 	private:
 }; 
 
-//struct ignore{//±£Áô£ºbindÊµÏÖ 
+//struct ignore{//ä¿ç•™ï¼šbindå®ç° 
 //	//nothing to do
 //};
 //template<class F,class ...Args>
@@ -56,63 +56,63 @@ class Fn{
 //	return fn
 //}
 
-template<class Tp,class Fn,size_t N>
-struct __do_tp_foreach{
-	static void run(Tp& t,Fn fn){
-		__do_tp_foreach<Tp,Fn,N-1>::run(t,fn);
-		fn(get<N>(t));
-	}
-};
-template<class Tp,class Fn>
-struct __do_tp_foreach<Tp,Fn,0>{
-	static void run(Tp& t,Fn fn){
-		fn(get<0>(t));
-	}
-};
-template<class Fn,class ...Args>
-void tp_foreach(const tuple<Args...>& t,const Fn fn){
-	typedef const tuple<Args...>& tp_type;
-	__do_tp_foreach<tp_type,Fn,tuple_size<tp_type>::value-1>::run(t,fn);
-}
-template<class T>
-void doub(T& a){
-	a*=2;
-} 
-template<class T>
-void tp_print(T& a){
-	cout<<a<<',';
-}
+// template<class Tp,class Fn,size_t N>//ä¿ç•™ï¼štuple_foreach
+// struct __do_tp_foreach{
+// 	static void run(Tp& t,Fn fn){
+// 		__do_tp_foreach<Tp,Fn,N-1>::run(t,fn);
+// 		fn(get<N>(t));
+// 	}
+// };
+// template<class Tp,class Fn>
+// struct __do_tp_foreach<Tp,Fn,0>{
+// 	static void run(Tp& t,Fn fn){
+// 		fn(get<0>(t));
+// 	}
+// };
+// template<class Fn,class ...Args>
+// void tp_foreach(const tuple<Args...>& t,const Fn fn){
+// 	typedef const tuple<Args...>& tp_type;
+// 	__do_tp_foreach<tp_type,Fn,tuple_size<tp_type>::value-1>::run(t,fn);
+// }
+// template<class T>
+// void doub(T& a){
+// 	a*=2;
+// } 
+// template<class T>
+// void tp_print(T& a){
+// 	cout<<a<<',';
+// }
 
 int main(){
-	cout<<"-------------"<<endl;//ÆÕÍ¨º¯ÊıÖ¸Õë 
+	cout<<"-------------"<<endl;//æ™®é€šå‡½æ•°æŒ‡é’ˆ 
 	
-	void (*pfn0)(int,int)=add;//ÆÕÍ¨º¯Êı²»ÓÃ & 
-	pfn0(1,2);//Ò²²»ÓÃ * 
+	void (*pfn0)(int,int)=add;//æ™®é€šå‡½æ•°ä¸ç”¨ & 
+	pfn0(1,2);//ä¹Ÿä¸ç”¨ * 
 	
-	cout<<"-------------"<<endl;//³ÉÔ±º¯ÊıÖ¸Õë 
+	cout<<"-------------"<<endl;//æˆå‘˜å‡½æ•°æŒ‡é’ˆ 
 	
-	int (Test::*pfn1)(int,int)const=&Test::add;//±ØĞë¼Ó &
+	int (Test::*pfn1)(int,int)const=&Test::add;//å¿…é¡»åŠ  &
 	fn_add pfn2=&Test::minus;
 	const Test t;
-	//Test::add(1,2);//³ÉÔ±º¯ÊıÊ¹ÓÃ±ØĞëÊµÀı»¯ 
-	//pfn1(1,2);//±ØĞëÓĞ¶ÔÏóÊµÌå 
+	//Test::add(1,2);//æˆå‘˜å‡½æ•°ä½¿ç”¨å¿…é¡»å®ä¾‹åŒ– 
+	//pfn1(1,2);//å¿…é¡»æœ‰å¯¹è±¡å®ä½“ 
 	(t.*pfn1)(1,2);
 	(t.*pfn2)(1,2);
 	
-	int (*a)(int,int)=Test::mul;//static¿ÉÒÔÈÏÎª¶ÀÁ¢ÓÚÀàÖ®Íâ£¬ÓëÆÕÍ¨º¯ÊıÒ»ÖÂ 
-	Test::mul(1,2);//staticº¯Êı¿ÉÖ±½ÓÓÃ 
+	int (*a)(int,int)=Test::mul;//staticå¯ä»¥è®¤ä¸ºç‹¬ç«‹äºç±»ä¹‹å¤–ï¼Œä¸æ™®é€šå‡½æ•°ä¸€è‡´ 
+	Test::mul(1,2);//staticå‡½æ•°å¯ç›´æ¥ç”¨ 
 	
 	Test t2;
-	function<int(const Test&,int,int)> pfn3=&Test::add;//ÊÂÊµÖ¤Ã÷function·Ç³£·½±ã£¬×¢ÒâÒª´«Èëthis 
+	function<int(const Test&,int,int)> pfn3=&Test::add;//äº‹å®è¯æ˜functionéå¸¸æ–¹ä¾¿ï¼Œæ³¨æ„è¦ä¼ å…¥this 
 	pfn3(t,1,2);
 	pfn3(t2,1,2);
-	//ÈôÃ»ÓĞthis
-	Fn fn_t;//Ààº¯Êı£¬functor 
-	function<void(int)> pfn4=fn_t;//¿É¼ûfunctionÊÇ¿½±´´«µİ£¨¸³Öµ´«µİ£© 
+	//è‹¥æ²¡æœ‰this
+	Fn fn_t;//ç±»å‡½æ•°ï¼Œfunctor 
+	function<void(int)> pfn4=fn_t;//å¯è§functionæ˜¯æ‹·è´ä¼ é€’ï¼ˆèµ‹å€¼ä¼ é€’ï¼‰ 
 	pfn4(10);
 	pfn4(10);
 	cout<<fn_t.sum<<endl;
-	function<void(int)> pfn5=ref(reference_wrapper<Fn>(fn_t));//±ê×¼ÓÃ·¨£¬ÊÂÊµÉÏ²»ÓÃref_warp,´«ÒıÓÃ 
+	function<void(int)> pfn5=ref(reference_wrapper<Fn>(fn_t));//æ ‡å‡†ç”¨æ³•ï¼Œäº‹å®ä¸Šä¸ç”¨ref_warp,ä¼ å¼•ç”¨ 
 	pfn5(101);
 	cout<<fn_t.sum<<endl; 
 	function<void(int)> pfn6=bind(fn_t,placeholders::_1);
@@ -125,7 +125,7 @@ int main(){
 	//https://www.cnblogs.com/yyxt/p/3987717.html 
 	
 	function<void(int,int)> fna=add;
-/*//Ê¾Àı´úÂë£ºbind 
+/*//ç¤ºä¾‹ä»£ç ï¼šbind 
 #include <iostream>
 using namespace std;
 class A
@@ -151,47 +151,47 @@ void fun_2(int &a,int &b)
 
 int main(int argc, const char * argv[])
 {
-    //f1µÄÀàĞÍÎª function<void(int, int, int)>
-    auto f1 = std::bind(fun,1,2,3); //±íÊ¾°ó¶¨º¯Êı fun µÄµÚÒ»£¬¶ş£¬Èı¸ö²ÎÊıÖµÎª£º 1 2 3
+    //f1çš„ç±»å‹ä¸º function<void(int, int, int)>
+    auto f1 = std::bind(fun,1,2,3); //è¡¨ç¤ºç»‘å®šå‡½æ•° fun çš„ç¬¬ä¸€ï¼ŒäºŒï¼Œä¸‰ä¸ªå‚æ•°å€¼ä¸ºï¼š 1 2 3
     f1(); //print:1  2  3
 
     auto f2 = std::bind(fun, placeholders::_1,placeholders::_2,3);
-    //±íÊ¾°ó¶¨º¯Êı fun µÄµÚÈı¸ö²ÎÊıÎª 3£¬¶øfun µÄµÚÒ»£¬¶ş¸ö²ÎÊı·Ö±ğÓÉµ÷ÓÃ f2 µÄµÚÒ»£¬¶ş¸ö²ÎÊıÖ¸¶¨
+    //è¡¨ç¤ºç»‘å®šå‡½æ•° fun çš„ç¬¬ä¸‰ä¸ªå‚æ•°ä¸º 3ï¼Œè€Œfun çš„ç¬¬ä¸€ï¼ŒäºŒä¸ªå‚æ•°åˆ†åˆ«ç”±è°ƒç”¨ f2 çš„ç¬¬ä¸€ï¼ŒäºŒä¸ªå‚æ•°æŒ‡å®š
     f2(1,2);//print:1  2  3
 
     auto f3 = std::bind(fun,placeholders::_2,placeholders::_1,3);
-    //±íÊ¾°ó¶¨º¯Êı fun µÄµÚÈı¸ö²ÎÊıÎª 3£¬¶øfun µÄµÚÒ»£¬¶ş¸ö²ÎÊı·Ö±ğÓÉµ÷ÓÃ f3 µÄµÚ¶ş£¬Ò»¸ö²ÎÊıÖ¸¶¨
-    //×¢Òâ£º f2  ºÍ  f3 µÄÇø±ğ¡£
+    //è¡¨ç¤ºç»‘å®šå‡½æ•° fun çš„ç¬¬ä¸‰ä¸ªå‚æ•°ä¸º 3ï¼Œè€Œfun çš„ç¬¬ä¸€ï¼ŒäºŒä¸ªå‚æ•°åˆ†åˆ«ç”±è°ƒç”¨ f3 çš„ç¬¬äºŒï¼Œä¸€ä¸ªå‚æ•°æŒ‡å®š
+    //æ³¨æ„ï¼š f2  å’Œ  f3 çš„åŒºåˆ«ã€‚
     f3(1,2);//print:2  1  3
 
 
     int n = 2;
     int m = 3;
 
-    auto f4 = std::bind(fun_2, n,placeholders::_1); //±íÊ¾°ó¶¨fun_2µÄµÚÒ»¸ö²ÎÊıÎªn, fun_2µÄµÚ¶ş¸ö²ÎÊıÓÉµ÷ÓÃf4µÄµÚÒ»¸ö²ÎÊı£¨_1£©Ö¸¶¨¡£
+    auto f4 = std::bind(fun_2, n,placeholders::_1); //è¡¨ç¤ºç»‘å®šfun_2çš„ç¬¬ä¸€ä¸ªå‚æ•°ä¸ºn, fun_2çš„ç¬¬äºŒä¸ªå‚æ•°ç”±è°ƒç”¨f4çš„ç¬¬ä¸€ä¸ªå‚æ•°ï¼ˆ_1ï¼‰æŒ‡å®šã€‚
     f4(m); //print:3  4
 
-    cout<<m<<endl;//print:4  ËµÃ÷£ºbind¶ÔÓÚ²»ÊÂÏÈ°ó¶¨µÄ²ÎÊı£¬Í¨¹ıstd::placeholders´«µİµÄ²ÎÊıÊÇÍ¨¹ıÒıÓÃ´«µİµÄ,Èçm
-    cout<<n<<endl;//print:2  ËµÃ÷£ºbind¶ÔÓÚÔ¤ÏÈ°ó¶¨µÄº¯Êı²ÎÊıÊÇÍ¨¹ıÖµ´«µİµÄ£¬Èçn
+    cout<<m<<endl;//print:4  è¯´æ˜ï¼šbindå¯¹äºä¸äº‹å…ˆç»‘å®šçš„å‚æ•°ï¼Œé€šè¿‡std::placeholdersä¼ é€’çš„å‚æ•°æ˜¯é€šè¿‡å¼•ç”¨ä¼ é€’çš„,å¦‚m
+    cout<<n<<endl;//print:2  è¯´æ˜ï¼šbindå¯¹äºé¢„å…ˆç»‘å®šçš„å‡½æ•°å‚æ•°æ˜¯é€šè¿‡å€¼ä¼ é€’çš„ï¼Œå¦‚n
 
 
     A a;
-    //f5µÄÀàĞÍÎª function<void(int, int)>
-    auto f5 = std::bind(&A::fun_3, a,placeholders::_1,placeholders::_2); //Ê¹ÓÃauto¹Ø¼ü×Ö
-    f5(10,20);//µ÷ÓÃa.fun_3(10,20),print:10 20
+    //f5çš„ç±»å‹ä¸º function<void(int, int)>
+    auto f5 = std::bind(&A::fun_3, a,placeholders::_1,placeholders::_2); //ä½¿ç”¨autoå…³é”®å­—
+    f5(10,20);//è°ƒç”¨a.fun_3(10,20),print:10 20
 
     std::function<void(int,int)> fc = std::bind(&A::fun_3, a,std::placeholders::_1,std::placeholders::_2);
-    fc(10,20);//µ÷ÓÃa.fun_3(10,20) print:10 20 
+    fc(10,20);//è°ƒç”¨a.fun_3(10,20) print:10 20 
 
-¡¡¡¡return 0; 
+ã€€ã€€return 0; 
 }
 */
 
-	cout<<"-------------"<<endl;//tp_foreach with bind 
-	auto tp=make_tuple(1,2,3,"qwert",12.5);//×¢Òâ£¬ÓÃtieºÍforward_as_tuple¶¼ºÜ¿Ó 
-	//[](auto& a){return ++a;}(qwert);//º¯ÊıºÍÄ£°å²ÎÊı²»ÄÜÎªauto 
-	tp_foreach(tp,doub);
-	tp_foreach(tp,tp_print);
+// 	cout<<"-------------"<<endl;//tp_foreach with bind ä¿ç•™
+// 	auto tp=make_tuple(1,2,3,"qwert",12.5);//æ³¨æ„ï¼Œç”¨tieå’Œforward_as_tupleéƒ½å¾ˆå‘ 
+// 	//[](auto& a){return ++a;}(qwert);//å‡½æ•°å’Œæ¨¡æ¿å‚æ•°ä¸èƒ½ä¸ºauto 
+// 	tp_foreach(tp,doub);
+// 	tp_foreach(tp,tp_print);
 	
 	return 0;
 }
