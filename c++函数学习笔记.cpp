@@ -124,6 +124,10 @@ int main(){
 	//https://blog.csdn.net/u012297622/article/details/51303238
 	//https://www.cnblogs.com/yyxt/p/3987717.html 
 	
+	//http://www.cnblogs.com/qicosmos/p/3302144.html 好东西
+	//http://www.cnblogs.com/xusd-null/p/3698969.html 
+	//https://www.cnblogs.com/qicosmos/p/3723388.html
+	
 	function<void(int,int)> fna=add;
 /*//示例代码：bind 
 #include <iostream>
