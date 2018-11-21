@@ -8,7 +8,7 @@ struct Edge{
 	Edge(int t,int w):to(t),w(w){};
 };
 vector<Edge> edge[maxn];
-int vis[maxn];
+int vis[maxn]={0};
 int n,m,ans=0;
 
 /////////调教成双向的队列，可双向插入取出 
@@ -70,8 +70,8 @@ void dfs(int x){//深度优先搜索
 		if(vis[edge[x][i].to]){
 			continue;
 		}else{
-			vis[edge[x][i].to]=1;
-			dfs(edge[x][i].to);
+			dfs(edge[x][i].to);//这里也是，先访问，再打标记 
+			//vis[edge[x][i].to]=1;//多余 
 		}
 	}
 }
@@ -82,14 +82,27 @@ void bfs(int x){//广度优先搜索
 		if(vis[edge[x][i].to]){
 			continue;
 		}else{
-			vis[edge[x][i].to]=1;
 			push_back(edge[x][i].to);
 		}
 	}
-	if(!is_empty){//千万注意 
+	if(!is_empty()){//千万注意 访问后再打标记 
 		bfs(pop_front());
 	}
 }
+//1--2--5--4   7  10
+// \          /
+//  3  6--8---  9--11 
+/*
+11 7 
+1 2 1
+5 4 1
+2 5 1
+3 1 1
+6 8 1
+8 7 1
+9 11 1 
+*/
+
 
 void c(){//计算联通块的个数 
 	for(int i=1;i<=n;i++){
