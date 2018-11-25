@@ -7,30 +7,22 @@ struct Edge{
 
 const int maxn=10001;
 int head[maxn];
-int cnt=0;//´æ´¢µÄ±ßµÄÊýÄ¿ 
-Edge edge[maxn];//ËùÓÐÁ´±í
+int cnt=0;//å­˜å‚¨çš„è¾¹çš„æ•°ç›® 
+Edge edge[maxn];//æ‰€æœ‰é“¾è¡¨
 int n,m,ans=0;
 
 void addedge(int x,int y,int w){
-	edge[++cnt].next=head[x];//Á´±íÁ¬½Ó£¬´Ó1¿ªÊ¼
-	edge[cnt].to=y;//´æ´¢Êý¾Ý 
+	edge[++cnt].next=head[x];//é“¾è¡¨è¿žæŽ¥ï¼Œä»Ž1å¼€å§‹
+	edge[cnt].to=y;//å­˜å‚¨æ•°æ® 
 	edge[cnt].w=w;
-	head[x]=cnt;//¸üÐÂÁ´±íÍ· 
+	head[x]=cnt;//æ›´æ–°é“¾è¡¨å¤´ 
 } 
 
 int vis[maxn]={0};
 
-void dfs(int x){//´Óx¿ªÊ¼ 
-	if(!vis[x]){
-		vis[x]=1;
-		for(int i=head[x];i!=0;i=edge[i].next){
-			if(vis[i]){
-				continue;
-			}else{
-				dfs(edge[i].to);
-			}
-		}
-	}
+void dfs(int x){//ä»Žxå¼€å§‹ 
+	vis[x]=1;
+	///ç•¥
 }
 
 void c(){
@@ -57,7 +49,7 @@ void c(){
 9 11 1 
 */
 int main(){
-	cin>>n>>m;//nµãm±ß
+	cin>>n>>m;//nç‚¹mè¾¹
 	for(int i=0;i<m;i++){
 		int a,b,w;
 		cin>>a>>b>>w;
