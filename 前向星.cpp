@@ -22,7 +22,35 @@ int vis[maxn]={0};
 
 void dfs(int x){//从x开始 
 	vis[x]=1;
-	///略
+	for(int i=head[x];i!=0;i=edge[i].next){
+		if(!vis[edge[i].to]){
+			dfs(edge[i].to);
+		}
+	} 
+}
+
+int que[maxn];
+int begin=0,end=0;
+void push(int x){
+	que[end++]=x;
+}
+int pop(){
+	return que[begin++];	
+}
+bool is_empty(){
+	return begin==end;
+}
+
+int bfs(int x){
+	vis[x]=1;
+	for(int i=head[x];i!=0;i=edge[i].next){
+		if(!vis[edge[i].to]){
+			push(edge[i].to);
+		} 
+	}
+	if(!is_empty()){
+		bfs(pop());	
+	}
 }
 
 void c(){
@@ -30,7 +58,7 @@ void c(){
 		if(vis[i]){
 			continue;
 		}else{
-			dfs(i);
+			bfs(i);
 			ans++;
 		}
 	}
